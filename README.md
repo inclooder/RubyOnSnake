@@ -1,4 +1,7 @@
-RubyOnSnake
-===========
+# snake-ruby
 
-Simple Snake
+Simple snake game implementation written in ruby.
+
+## Installation
+
+todo
