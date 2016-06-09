@@ -9,13 +9,26 @@ module SnakeRuby
     attr_accessor :direction, :grow, :parts
     attr_reader :land_rect, :allive
 
+    INVALID_DIRECTION_CHANGES = {
+      :right => :left, 
+      :left => :right, 
+      :up => :down, 
+      :down => :up
+    }.freeze
+
+    KEY_TO_DIRECTION = {
+      K_UP => :up, 
+      K_DOWN => :down, 
+      K_RIGHT => :right, 
+      K_LEFT => :left
+    }.freeze
 
     def move_by_direction(rect)
       case @direction
-      when :up then rect.y-= Config.box_size
-      when :left then rect.x-= Config.box_size 
-      when :down then rect.y+= Config.box_size
-      when :right then rect.x+= Config.box_size
+      when :up then rect.y -= Config.box_size
+      when :left then rect.x -= Config.box_size 
+      when :down then rect.y += Config.box_size
+      when :right then rect.x += Config.box_size
       end
       rect.clone
     end
@@ -43,7 +56,7 @@ module SnakeRuby
         if @grow == 0
           @parts.pop
         else
-          @grow-=1
+          @grow -= 1
         end
         new_part = move_by_direction(@parts.first)
         @parts.unshift new_part 
@@ -63,11 +76,11 @@ module SnakeRuby
 
     def handle_movement ev
       if ev.key == K_G
-        @grow+=1
+        @grow += 1
       end
-      new_dir = {K_UP => :up, K_DOWN => :down, K_RIGHT => :right, K_LEFT => :left}[ev.key]
+      new_dir = KEY_TO_DIRECTION[ev.key]
 
-      unless {:right => :left, :left => :right, :up => :down, :down => :up}[new_dir] == @direction
+      unless INVALID_DIRECTION_CHANGES[@direction] == new_dir
         @direction = new_dir
       end
     end

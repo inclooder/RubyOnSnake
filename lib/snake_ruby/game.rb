@@ -8,14 +8,14 @@ include Rubygame
 module SnakeRuby
   class Game
     def initialize
-      @screen = Screen.new [640,480], 0, [HWSURFACE, DOUBLEBUF]
+      @screen = Screen.new [640, 480], 0, [HWSURFACE, DOUBLEBUF]
 
       @queue = EventQueue.new
       @clock = Clock.new
       @clock.target_framerate = 30
       sr = @screen.make_rect
       @snake = Snake.new(sr.centerx, sr.centery, Config.snake_initial_length, :up, sr)
-      @food=[]
+      @food = []
       spawn_food
     end
 
@@ -24,13 +24,13 @@ module SnakeRuby
     end
 
     def spawn_food
-      @food.push Food.new rand((@screen.w/Config.box_size))*Config.box_size, rand((@screen.h/Config.box_size))*Config.box_size
+      @food.push Food.new rand((@screen.w / Config.box_size)) * Config.box_size, rand((@screen.h/Config.box_size)) * Config.box_size
     end
 
     def food_collision
       @food.each do |f|
         if f.body.contain? @snake.head
-          @snake.grow+=1
+          @snake.grow += 1
           spawn_food
           @food.delete(f)
           break
@@ -55,7 +55,7 @@ module SnakeRuby
       food_collision
       @snake.act
       st = "Ruby on Snake [score:#{@snake.length}]"
-      st+= " Game Over" unless @snake.allive
+      st += " Game Over" unless @snake.allive
       @screen.title = st
       @queue.each do |ev|
         case ev
@@ -66,7 +66,6 @@ module SnakeRuby
           handle_keys ev
         end
       end
-
     end
 
     def draw
