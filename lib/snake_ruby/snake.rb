@@ -2,20 +2,20 @@ require 'rubygems'
 require 'rubygame'
 include Rubygame
 
+require_relative 'config'
+
 module SnakeRuby
   class Snake
-    COLOR = 'green'
-    HEAD_COLOR = 'yellow'
     attr_accessor :direction, :grow, :parts
     attr_reader :land_rect, :allive
 
 
     def move_by_direction(rect)
       case @direction
-      when :up then rect.y-= BOX_SIZE
-      when :left then rect.x-= BOX_SIZE 
-      when :down then rect.y+= BOX_SIZE
-      when :right then rect.x+= BOX_SIZE
+      when :up then rect.y-= Config.box_size
+      when :left then rect.x-= Config.box_size 
+      when :down then rect.y+= Config.box_size
+      when :right then rect.x+= Config.box_size
       end
       rect.clone
     end
@@ -30,7 +30,7 @@ module SnakeRuby
       @direction = direction
       @land_rect = land_rect
       @parts = []
-      start = Rect.new(x,y,BOX_SIZE,BOX_SIZE)
+      start = Rect.new(x,y,Config.box_size,Config.box_size)
       length.times do
         start = move_by_direction(start)
         @parts.unshift start
@@ -56,9 +56,9 @@ module SnakeRuby
 
     def draw on_surface
       @parts[1..-1].each do |part|
-        on_surface.draw_box_s part.topleft, part.bottomright, COLOR
+        on_surface.draw_box_s part.topleft, part.bottomright, Config.snake_color
       end
-      on_surface.draw_box_s head.topleft, head.bottomright, HEAD_COLOR
+      on_surface.draw_box_s head.topleft, head.bottomright, Config.snake_head_color
     end
 
     def handle_movement ev

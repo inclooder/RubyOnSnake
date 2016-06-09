@@ -1,16 +1,15 @@
-require_relative 'constants'
+require_relative 'config'
 
 module SnakeRuby
   class Food 
-    COLOR = 'red'
     attr_reader :body
 
     def initialize(x,y)
-      @body = Rect.new(x,y,BOX_SIZE,BOX_SIZE)
+      @body = Rect.new(x,y, Config.box_size, Config.box_size)
     end
 
     def draw(on_surface)
-      on_surface.draw_box_s @body.topleft, @body.bottomright, COLOR
+      on_surface.draw_box_s @body.topleft, @body.bottomright, Config.food_color
     end
 
     def move(x,y)

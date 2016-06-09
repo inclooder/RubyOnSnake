@@ -7,9 +7,6 @@ include Rubygame
 
 module SnakeRuby
   class Game
-    BG_COLOR = 'black'
-    INITIAL_LENGTH = 10
-
     def initialize
       @screen = Screen.new [640,480], 0, [HWSURFACE, DOUBLEBUF]
 
@@ -17,17 +14,17 @@ module SnakeRuby
       @clock = Clock.new
       @clock.target_framerate = 30
       sr = @screen.make_rect
-      @snake = Snake.new(sr.centerx, sr.centery, INITIAL_LENGTH, :up, sr)
+      @snake = Snake.new(sr.centerx, sr.centery, Config.snake_initial_length, :up, sr)
       @food=[]
       spawn_food
     end
 
     def draw_background
-      @screen.fill BG_COLOR
+      @screen.fill Config.background_color
     end
 
     def spawn_food
-      @food.push Food.new rand((@screen.w/BOX_SIZE))*BOX_SIZE, rand((@screen.h/BOX_SIZE))*BOX_SIZE
+      @food.push Food.new rand((@screen.w/Config.box_size))*Config.box_size, rand((@screen.h/Config.box_size))*Config.box_size
     end
 
     def food_collision
