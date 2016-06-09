@@ -8,10 +8,6 @@ module SnakeRuby
       @body = Rect.new(x,y, Config.box_size, Config.box_size)
     end
 
-    def draw(on_surface)
-      on_surface.draw_box_s @body.topleft, @body.bottomright, Config.food_color
-    end
-
     def move(x,y)
       @body.topleft = [x,y]
     end

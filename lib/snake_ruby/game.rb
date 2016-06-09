@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rubygame'
 require_relative 'food'
 require_relative 'snake'
+require_relative 'graphics/object_drawer_locator'
 
 include Rubygame
 
@@ -16,6 +17,7 @@ module SnakeRuby
       sr = @screen.make_rect
       @snake = Snake.new(sr.centerx, sr.centery, Config.snake_initial_length, :up, sr)
       @food = []
+      @object_drawer_locator = Graphics::ObjectDrawerLocator.new @screen
       spawn_food
     end
 
@@ -70,8 +72,11 @@ module SnakeRuby
 
     def draw
       draw_background
-      @food.each {|f| f.draw @screen}
-      @snake.draw @screen
+      @food.each do |f|
+        @object_drawer_locator.draw f
+      end
+      @object_drawer_locator.draw @snake
+      #@snake.draw @screen
       @screen.update
     end
   end

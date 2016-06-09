@@ -67,13 +67,6 @@ module SnakeRuby
       head = @parts.first
     end
 
-    def draw on_surface
-      @parts[1..-1].each do |part|
-        on_surface.draw_box_s part.topleft, part.bottomright, Config.snake_color
-      end
-      on_surface.draw_box_s head.topleft, head.bottomright, Config.snake_head_color
-    end
-
     def handle_movement ev
       if ev.key == K_G
         @grow += 1
