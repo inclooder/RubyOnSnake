@@ -1,11 +1,11 @@
 module SnakeRuby::Graphics
   class AbstractDrawer
     def draw surface, game_object
-      raise 'Abstract method call!'
+      raise NotImplementedError
     end
 
     def can_draw? game_object_class
-      raise 'Abstract method call!'
+      raise NotImplementedError
     end
   end
 end

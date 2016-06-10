@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'rubygame'
 require_relative 'food'
 require_relative 'snake'
@@ -9,11 +8,11 @@ include Rubygame
 module SnakeRuby
   class Game
     def initialize
-      @screen = Screen.new [640, 480], 0, [HWSURFACE, DOUBLEBUF]
+      @screen = Screen.new [Config.screen_width, Config.screen_height], 0, [HWSURFACE, DOUBLEBUF]
 
       @queue = EventQueue.new
       @clock = Clock.new
-      @clock.target_framerate = 30
+      @clock.target_framerate = Config.framerate
       sr = @screen.make_rect
       @snake = Snake.new(sr.centerx, sr.centery, Config.snake_initial_length, :up, sr)
       @food = []
@@ -76,7 +75,6 @@ module SnakeRuby
         @object_drawer_locator.draw f
       end
       @object_drawer_locator.draw @snake
-      #@snake.draw @screen
       @screen.update
     end
   end
