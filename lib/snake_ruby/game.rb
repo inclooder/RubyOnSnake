@@ -2,12 +2,14 @@ require 'rubygame'
 require_relative 'food'
 require_relative 'snake'
 require_relative 'graphics/object_drawer_locator'
+require_relative 'sound_controller'
 
 include Rubygame
 
 module SnakeRuby
   class Game
     def initialize
+      SoundController.init
       @screen = Screen.new [Config.screen_width, Config.screen_height], 0, [HWSURFACE, DOUBLEBUF]
 
       @queue = EventQueue.new
@@ -31,6 +33,7 @@ module SnakeRuby
     def food_collision
       @food.each do |f|
         if f.body.contain? @snake.head
+          SoundController.play_eat
           @snake.grow += 1
           spawn_food
           @food.delete(f)
